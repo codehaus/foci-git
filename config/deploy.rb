@@ -1,25 +1,39 @@
+################################################################################
+#  Copyright 2006-2009 Codehaus Foundation
+#
+#  Licensed under the Apache License, Version 2.0 (the "License");
+#  you may not use this file except in compliance with the License.
+#  You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+#  Unless required by applicable law or agreed to in writing, software
+#  distributed under the License is distributed on an "AS IS" BASIS,
+#  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#  See the License for the specific language governing permissions and
+#  limitations under the License.
+################################################################################
+
 set :application, "foci"
-set :repository,  "https://svn.rubyhaus.org/foci/trunk/foci"
-
-# If you aren't deploying to /u/apps/#{application} on the target
-# servers (which is the default), you can specify the actual location
-# via the :deploy_to variable:
-# set :deploy_to, "/var/www/#{application}"
-
-# If you aren't using Subversion to manage your source code, specify
-# your SCM below:
-# set :scm, :subversion
 
 role :app, "codehaus03.managed.contegix.com"
 role :web, "codehaus03.managed.contegix.com"
 role :db,  "codehaus03.managed.contegix.com", :primary => true
 
-
 set :deploy_to, '/opt/foci'
-set :mongrel_conf, "#{deploy_to}/current/config/mongrel_cluster.yml"
-set :mongrel_user, 'ror-foci'
-set :mongrel_group, 'ror-foci'
 set :use_sudo, false
 set :user, 'ror-foci'
 
 ssh_options[:user] = 'ror-foci'
+ssh_options[:forward_agent] = true
+
+# Repository options
+set :scm, "git"
+set :git_enable_submodules, 1
+set :repository,  "git://git.rubyhaus.org/foci.git"
+set :branch, "master"
+
+# Deployment options
+set :deploy_via, :remote_cache
+set :use_sudo, false
+
