@@ -1,0 +1,6 @@
+91.65.216.53 - - [22/Mar/2008:09:32:59 -0500] "GET /favicon.ico HTTP/1.1" 404 266 "-" "Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.8.1.12) Gecko/20080201 Firefox/2.0.0.12" xfire.codehaus.org 0
+63.246.7.187 - - [22/Mar/2008:09:32:59 -0500] "\xb8:\xcb /user/messages/414?root=haus/codehaus/mevenide HTTP/1.1" 502 413 "http://www.nationallywager.com/betting-on-horse-racing-for.html" "Mozilla/4.0 (compatible; MSIE 5.5; Windows 98; KITV4.7 Wanadoo)" archive.hausfoundation.org 0
+69.94.124.234 - - [22/Mar/2008:09:32:59 -0500] "\xb8:\xcb /user/messages/414 HTTP/1.1" 502 413 "http://www.nationallywager.com/betting-on-horse-racing-for.html" "Mozilla/4.0 (compatible; MSIE 5.5; Windows 98; KITV4.7 Wanadoo)" archive.mevenide.codehaus.org 0
+198.179.147.18 - - [22/Mar/2008:09:32:59 -0500] "HEAD /mx4j/mx4j-tools/2.1.1/mx4j-tools-2.1.1.pom.sha1 HTTP/1.1" 404 - "-" "Jakarta Commons-HttpClient/2.0.2" dist.codehaus.org 0
+64.236.128.9 - - [22/Mar/2008:09:32:59 -0500] "GET /org/codehaus/mojo/cobertura-maven-plugin/maven-metadata.xml HTTP/1.1" 200 401 "-" "Java/1.5.0_12" snapshots.repository.codehaus.org 0
+64.236.128.9 - - [22/Mar/2008:09:32:59 -0500] "GET /org/codehaus/mojo/cobertura-maven-plugin/maven-metadata.xml.sha1 HTTP/1.1" 200 40 "-" "Java/1.5.0_12" snapshots.repository.codehaus.org 0

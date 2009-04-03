@@ -1,0 +1,27 @@
+xml.instruct! :xml, :version=>"1.0" 
+xml.ResultSet(:totalResultsAvailable => 4, :totalResultsReturned => 4, 
+              :firstResultPosition => 1) {
+                
+  xml.Result {
+    xml.name 'Accesses'
+    xml.value @totals.response_count
+  }
+  
+  xml.Result {
+    xml.name 'Total Data Transferred'
+    xml.value render_bytes(@totals.response_bytes)
+  }
+  
+  xml.Result {
+    xml.name 'Average Data Transferred'
+    xml.value render_bytes(@totals.average_response_bytes)
+  }
+  
+  xml.Result {
+    xml.name 'Average Response Time'
+    xml.value sprintf('%2.2fs', @totals.average_response_time)
+  }
+  
+}
+
+

@@ -1,0 +1,4 @@
+84.114.227.144 - - [22/Mar/2008:09:00:00 -0500] "HEAD /org/apache/maven/doxia/doxia/1.0-alpha-7/doxia-1.0-alpha-7.pom.sha1 HTTP/1.1" 404 - "-" "Jakarta Commons-HttpClient/2.0.2" dist.codehaus.org 0
+83.6.209.210 - - [22/Mar/2008:09:00:00 -0500] "GET /_projects/drools/_logos/small.png HTTP/1.1" 200 13800 "http://www.nabble.com/Drools---Java-Rules-Engine-f11822.html" "Mozilla/5.0 (Windows; U; Windows NT 5.1; pl; rv:1.8.1.12) Gecko/20080201 Firefox/2.0.0.12" media.xircles.codehaus.org 1
+69.140.84.37 - - [22/Mar/2008:09:00:01 -0500] "GET /Download HTTP/1.1" 200 17979 "http://www.grails.org/Installation" "Mozilla/5.0 (Macintosh; U; Intel Mac OS X; en-US; rv:1.8.1.12) Gecko/20080201 Firefox/2.0.0.12" grails.codehaus.org 0
+84.114.227.144 - - [22/Mar/2008:09:00:01 -0500] "HEAD /org/apache/maven/doxia/doxia-sink-api/1.0-alpha-7/doxia-sink-api-1.0-alpha-7.pom HTTP/1.1" 404 - "-" "Jakarta Commons-HttpClient/2.0.2" dist.codehaus.org 0

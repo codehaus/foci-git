@@ -1,0 +1,10 @@
+--- 
+cwd: /opt/foci/current
+port: "8000"
+environment: production
+address: ror.stats.hausfoundation.org
+pid_file: log/mongrel.pid
+servers: 3
+user: ror-foci
+group: ror-foci
+use_sudo: false

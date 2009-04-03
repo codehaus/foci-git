@@ -1,0 +1,7 @@
+xml.instruct! :xml, :version=>"1.0" 
+xml.ResultSet(:totalResultsAvailable => 0, :totalResultsReturned => 0, 
+              :firstResultPosition => 0) {
+  
+}
+
+

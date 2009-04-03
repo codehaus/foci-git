@@ -1,0 +1,13 @@
+xml.instruct! :xml, :version=>"1.0" 
+xml.ResultSet(:totalResultsAvailable => @domains.length, :totalResultsReturned => @domains.length, 
+              :firstResultPosition => 1) {
+  @domains.each { |domain|
+    xml.Result {
+      xml.domain domain.vhost.host
+      xml.response_count domain.response_count
+      xml.average_response_time domain.average_response_time
+      xml.response_bytes domain.response_bytes
+      xml.average_response_bytes domain.average_response_bytes
+    }
+  }
+}

@@ -1,0 +1,6 @@
+
+<ul>
+  <% for vhost in @vhosts %>
+  <li>Stats for <%= link_to vhost.host,  :vhost => vhost.host, :mode => 'vhost' %></li>
+  <% end %>
+</ul>

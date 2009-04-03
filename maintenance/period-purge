@@ -1,0 +1,56 @@
+#!/usr/bin/env ruby
+################################################################################
+#  Copyright 2007-2008 Codehaus Foundation
+#
+#  Licensed under the Apache License, Version 2.0 (the "License");
+#  you may not use this file except in compliance with the License.
+#  You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+#  Unless required by applicable law or agreed to in writing, software
+#  distributed under the License is distributed on an "AS IS" BASIS,
+#  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#  See the License for the specific language governing permissions and
+#  limitations under the License.
+################################################################################
+
+# Purges all stats for a period; leaving the source entries in tact so they can be reloaded readily
+# The process is tricky because a source may be linked to two periods (especially sources on the boundary of a period)
+#
+# In this case, we have two choices, ignore the overlap, or purge another period. A brutal cycle can ensue.
+
+require File.dirname(__FILE__) + '/../config/boot'
+require RAILS_ROOT + '/config/environment'  
+require 'optparse'
+
+#Defaults
+options = {}
+options[:incremental] = false
+options[:host] = `hostname`.strip
+
+#Note: incremental load is expensive (especially for bzipped files)
+ARGV.options do |opts|
+  opts.on( '-i', '--incremental', String, 'Attempt to load any extra lines that have been added to files' ) do |arg|
+    puts "Doing incremental load"
+    options[:incremental] = true
+  end
+  
+  opts.on( '-h', '--host', String, 'The host that these files came from' ) do |arg|
+    puts "Host argument provided: #{arg}"
+    options[:host] = arg
+  end
+  
+  opts.parse!
+end
+
+raise "At least one file or directory to import must be specified" unless ARGV.size > 0 
+
+puts "Loading data for host '#{options[:host]}'"
+loader = Foci::LoadData.new(options)
+for path in ARGV
+  loader.load( path )
+end
+
+
+

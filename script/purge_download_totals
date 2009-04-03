@@ -1,0 +1,10 @@
+#!/usr/bin/env ruby
+require File.dirname(__FILE__) + '/../config/boot'
+require RAILS_ROOT + '/config/environment'  
+
+Vhost.find(:all).each { |vhost|
+  next if vhost.aggregate_download_total
+
+  puts "VHost: #{vhost.host}"
+  puts DownloadTotal.delete_all("VHOST_ID = #{vhost.id}")
+}

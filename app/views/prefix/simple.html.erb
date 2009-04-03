@@ -1,0 +1,39 @@
+<% @page_title = 'Foci Status' %>
+<script type='text/javascript'>
+	YAHOO.util.Event.addListener(window, "load", function() {
+    YAHOO.example.XHR_XML = new function() {
+        var myColumnDefs = [
+            {key:"period", label:"Name", sortable:true},
+            {key:"response_count", label:"Response Count", formatter:"number", sortable:true},
+            {key:"response_bytes", label:"Response Bytes (total)", formatter: formatBytes, sortable:true},
+            {key:"average_response_time", label:"Response Time (average)", sortable:true},
+            {key:"average_response_bytes", label:"Response Bytes (average)", formatter: formatBytes, sortable:true},
+            {key:"path", label:"Path", sortable:true}
+        ];
+
+        this.myDataSource = new YAHOO.util.DataSource("./simple_data?prefix=<%= @prefix %>&host=<%= @host %>");
+        this.myDataSource.connMethodPost = true;
+        this.myDataSource.responseType = YAHOO.util.DataSource.TYPE_XML;
+        this.myDataSource.responseSchema = {
+            resultNode: "Result",
+            fields: ["period","response_count", "response_bytes", 
+									   "average_response_time", "average_response_bytes", "path"],
+						metaFields: {
+							totalRecords: "totalRecords",
+							sortKey: "sortKey"
+						}
+        };
+
+        this.myDataTable = new YAHOO.widget.DataTable("paths", myColumnDefs,
+                this.myDataSource, {initialRequest:"./simple_data?prefix=<%= @prefix %>&host=<%= @host %>&period=<% @period %>"});
+    };
+
+});
+</script>
+
+
+
+
+<div class='help'>A breakdown of path accesses</div>
+
+<div id='paths'></div>

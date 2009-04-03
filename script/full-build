@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+rake clean freshdb 
+RESULT=$?
+if [ $? -ne 0 ]; then
+  exit $RESULT
+fi
+
+rake db:migrate 
+RESULT=$?
+if [ $? -ne 0 ]; then
+  exit $RESULT
+fi
+
+rake test:xml
+RESULT=$?
+if [ $? -ne 0 ]; then
+  exit $RESULT
+fi
+
+

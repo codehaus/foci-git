@@ -1,0 +1,6 @@
+<% set_page_title( "Search for #{ @search_domain }" ) %>
+<ul>
+  <% for vhost in @vhosts %>
+  <li>Stats for <%= link_to vhost.host,  :controller => 'core', :vhost => vhost.host, :mode => 'vhost' %></li>
+  <% end %>
+</ul>

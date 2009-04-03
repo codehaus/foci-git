@@ -1,0 +1,11 @@
+#!/usr/bin/env ruby
+require File.dirname(__FILE__) + '/../config/boot'
+require RAILS_ROOT + '/config/environment'  
+
+Path.find(:all).each { |path|
+  begin
+    Path.delete(path.id)
+    puts  "Deleted #{path}"
+  rescue
+  end
+}

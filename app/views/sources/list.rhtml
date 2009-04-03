@@ -1,0 +1,18 @@
+<h1>HI</h1>
+
+<table class="grid">
+	<thead>
+		<tr>
+			<th>ID</th>
+			<th>URL</th>
+			<th>Line Count</th>
+		</tr>
+	</thead>
+<% for source in @sources %>
+  <tr>
+	<td><%= source.id %></td>
+	<td><%= source.url %></td>
+	<td><%= source.line_count %></td>
+  </tr>
+<% end %>
+</table>

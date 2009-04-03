@@ -1,0 +1,2 @@
+Check sources.line_count
+Don't abort on bad file load - log it into sources table perhaps? (and rollback changes)

@@ -1,0 +1,60 @@
+select  
+	to_char(pd.start, 'D'), p.path,
+	pd.name, sum(count), sum(bytes_total) 
+from download_totals dt, paths p, periods pd
+where 
+	vhost_id = (select id from vhosts where host = 'dist.codehaus.org') 
+	and dt.path_id = p.id 
+	and p.path like '/groovy/%'
+	and pd.id = dt.period_id
+group by 
+	pd.start, pd.name, p.path
+order by pd.start, sum(bytes_total) desc;
+
+
+
+select  
+	to_char(pd.start, 'D'),
+	pd.name, sum(count), sum(bytes_total) 
+from download_totals dt, paths p, periods pd
+where 
+	vhost_id = (select id from vhosts where host = 'dist.codehaus.org') 
+	and dt.path_id = p.id 
+	and p.path like '/groovy/%'
+	and pd.id = dt.period_id
+group by 
+	pd.start, pd.name
+order by pd.start, sum(bytes_total) desc;
+
+
+
+
+-- Download usage per subnet in a period
+select  
+	to_char(pd.start, 'D'), s.address,
+	sum(count) AS sum_count, sum(bytes_total) AS sum_bytes
+from subnet_totals st, subnets s, periods pd
+where 
+	vhost_id = (select id from vhosts where host = 'dist.codehaus.org') 
+	and st.subnet_id = s.id
+	and pd.id = st.period_id
+group by 
+	pd.start, pd.name, s.address
+order by pd.start, sum(bytes_total) desc;
+
+
+
+-- Download for a project from dist for each month
+select
+	to_char(pd.start, 'YYYYMM'), p.path,
+	sum(count), sum(bytes_total) 
+from download_totals dt, paths p, periods pd
+where 
+	vhost_id = (select id from vhosts where host = 'dist.codehaus.org') 
+	and dt.path_id = p.id 
+	and p.path like '/groovy/%'
+	and pd.id = dt.period_id
+group by 
+	to_char(pd.start, 'YYYYMM'), pd.start, p.path
+order by pd.start, sum(bytes_total) desc;
+

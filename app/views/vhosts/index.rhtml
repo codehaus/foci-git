@@ -1,0 +1,57 @@
+<% set_page_title( "Stats for #{ @vhost.host }" ) %>
+
+<% if @vhost.parent %>
+<div class="collapsible collapsed">
+<h1>Parent</h1>
+<ul>
+  <li><%= link_to @vhost.parent.host, :controller => '/vhosts', :vhost => @vhost.parent.host %></li>
+</ul>
+</div>
+<% end %>
+
+<% if @vhost.child_vhosts.length > 0 %>
+<div class="collapsible collapsed">
+<h1>Child hosts</h1>
+<ul>
+<% for vhost in @vhost.child_vhosts %>
+  <li><%= link_to vhost.host, :controller => '/vhosts', :vhost => vhost.host %></li>
+<% end %>
+</ul>
+</div>
+<% end %>
+
+
+<h1>Recent periods for <%= @vhost.host %></h1>
+<% for period in @recent_periods %>
+<li><%= link_to "#{period.name} (#{distance_of_time_in_words(Time.new - period.start)} ago)", :controller => 'vhosts', :vhost => @vhost.host, :period => period.id %></li>
+<% end %>
+
+
+<h1>Totals</h1>
+
+<table class="grid">
+  <thead>
+    <tr>
+      <th>Period</th>
+      <th>Accesses</th>
+      <th>Bytes - Total</th>
+      <th>Bytes - Average</th>
+			<th>Response Time - Average</th>
+    </tr>
+  </thead>
+  <% for total in @totals %>
+  <tr>
+		<% if total.period %>
+    <td><%= link_to total.period.name, :controller => '/vhosts', :vhost => total.vhost.host, :period => total.period.id %></td>
+		<% else %>
+		<td>All time!</td>
+		<% end %>
+    <td><%= total.response_count %></td>
+    <td><%= render_bytes(total.response_bytes) %></td>
+    <td><%= render_bytes(total.average_response_bytes) %></td>
+    <td><%= sprintf('%2.2fs', total.average_response_time) %></td>
+  </tr>
+  <% end %>
+</tr>
+</table>
+

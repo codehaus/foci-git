@@ -1,0 +1,62 @@
+#!/usr/bin/env ruby
+################################################################################
+#  Copyright 2007-2008 Codehaus Foundation
+#
+#  Licensed under the Apache License, Version 2.0 (the "License");
+#  you may not use this file except in compliance with the License.
+#  You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+#  Unless required by applicable law or agreed to in writing, software
+#  distributed under the License is distributed on an "AS IS" BASIS,
+#  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#  See the License for the specific language governing permissions and
+#  limitations under the License.
+################################################################################
+require File.dirname(__FILE__) + '/../config/boot'
+require RAILS_ROOT + '/config/environment'  
+
+require 'yaml'
+
+#ALTER TABLE PATHS ADD PATH_NORMALIZED VARCHAR(255)
+
+max_id = Path.maximum(:id)
+
+if File.exist?('highwater.txt')
+  min_id = File.read('highwater.txt').to_i
+else
+  min_id = Path.minimum(:id)
+end
+
+
+batch_size = 100
+min_id = min_id - (min_id % batch_size)
+max_id = max_id - (max_id % batch_size) + batch_size
+
+batches = (max_id - min_id) / batch_size
+
+0.upto(batches - 1) { |batch|
+  start_id = min_id + batch * batch_size
+  puts "Processing from #{start_id} to #{start_id + batch_size - 1}"
+  
+  
+  Path.find(:all, :conditions => [ 'id BETWEEN ? AND ?', start_id, start_id + batch_size - 1 ] ).each { |path|
+
+    path_normalized = Path.normalize_path(path.path)
+    
+    if path_normalized != path.path
+      puts "Normalizing #{path.path} to #{path_normalized}"
+      result = Path.find_by_sql( [ "SELECT sp_merge_paths( ?, ? )", path.path, path_normalized ])
+      puts result.inspect
+    end
+    
+    path.save!
+  }
+  
+  File.open('highwater.txt', 'w') { |io|
+    puts "Setting highwater mark to #{start_id + batch_size}"
+    io.write(start_id + batch_size)
+  }
+}
+

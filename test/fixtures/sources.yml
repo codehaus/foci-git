@@ -1,0 +1,8 @@
+l200601:
+  id: 1
+  url: file:////var/tmp/log.20060101.txt
+  host: clownhaus01
+l200602:
+  id: 2
+  url: file:////var/tmp/log.20060102.txt
+  host: clownhaus02

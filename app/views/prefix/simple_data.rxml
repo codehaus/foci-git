@@ -1,0 +1,18 @@
+cache :vhost => @vhost.host, :prefix => @prefix, :period => @start.strftime('%b%Y') do
+  @records = PathTotal.find_by_sql([ @sql, *@sql_args])
+  
+  xml.instruct! :xml, :version=>"1.0" 
+  xml.ResultSet(:totalResultsAvailable => @records.length, :totalResultsReturned => @records.length, 
+                :firstResultPosition => 1) {
+    @records.each { |record|
+      xml.Result {
+        xml.period record.period_text
+        xml.response_count record.response_count
+        xml.response_bytes record.response_bytes
+        xml.average_response_time sprintf('%2.2fs', record.average_response_time)
+        xml.average_response_bytes record.average_response_bytes
+        xml.path record.path_text
+      }
+    }
+  }
+end

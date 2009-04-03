@@ -1,0 +1,125 @@
+<% @page_title = 'Foci Status' %>
+<script type='text/javascript'>
+	YAHOO.util.Event.addListener(window, "load", function() {
+    YAHOO.example.XHR_SOURCES = new function() {
+        var myColumnDefs = [
+            {key:"name", label:"Name", sortable:true},
+            {key:"lines", label:"Lines Loaded", formatter:"number", sortable:true},
+            {key:"loaded", label:"Loaded", sortable:true}
+        ];
+
+        this.myDataSource = new YAHOO.util.DataSource("./sources_data?period_id=<%= @period.id %>");
+        this.myDataSource.connMethodPost = true;
+        this.myDataSource.responseType = YAHOO.util.DataSource.TYPE_XML;
+        this.myDataSource.responseSchema = {
+            resultNode: "Result",
+            fields: [ "name", "loaded", { key: "lines", parser: YAHOO.util.DataSource.parseNumber } ],
+						metaFields: {
+							totalRecords: "totalRecords",
+							sortKey: "sortKey"
+						}
+        };
+
+        this.myDataTable = new YAHOO.widget.DataTable("sources", myColumnDefs,
+                this.myDataSource, {initialRequest:"./sources_data?period_id=<%= @period.id %>"});
+    };
+
+		YAHOO.example.XHR_TOTALS = new function() {
+        var myColumnDefs = [
+            {key:"name", label:"Name", sortable:false},
+            {key:"value", label:"Value", sortable:false}
+        ];
+
+        this.myDataSource = new YAHOO.util.DataSource("./totals_data?period_id=<%= @period.id %>");
+        this.myDataSource.connMethodPost = true;
+        this.myDataSource.responseType = YAHOO.util.DataSource.TYPE_XML;
+        this.myDataSource.responseSchema = {
+            resultNode: "Result",
+            fields: ["name","value"]
+        };
+
+        this.myDataTable = new YAHOO.widget.DataTable("totals", myColumnDefs,
+                this.myDataSource, {initialRequest:"./totals_data?period_id=<%= @period.id %>"});
+    };
+
+		YAHOO.example.XHR_XML_DOMAINS = new function() {
+        var myColumnDefs = [
+            {key:"domain", label:"Name", sortable:true},
+            {key:"response_count", label:"Accesses", sortable:true},
+            {key:"average_response_time", label:"Average Response Time", sortable:true, formatter: formatResponseTime },
+            {key:"response_bytes", label:"Bytes Transferred (&Sigma;)", formatter: formatBytes, sortable:true },
+            {key:"average_response_bytes", label:"Bytes Transferred (Average)", formatter: formatBytes, sortable:true }
+        ];
+
+        this.myDataSource = new YAHOO.util.DataSource("./domains_data?period_id=<%= @period.id %>");
+        this.myDataSource.connMethodPost = true;
+        this.myDataSource.responseType = YAHOO.util.DataSource.TYPE_XML;
+        this.myDataSource.responseSchema = {
+            resultNode: "Result",
+            fields: ["domain","response_count", 
+											{ key: "average_response_time", parser: YAHOO.util.DataSource.parseNumber }, 
+										  { key: "response_bytes", parser: YAHOO.util.DataSource.parseNumber }, 
+										  { key: "average_response_bytes", parser: YAHOO.util.DataSource.parseNumber }]
+        };
+
+        this.myDataTable = new YAHOO.widget.DataTable("domains", myColumnDefs,
+                this.myDataSource, {initialRequest:"./domains_data?period_id=<%= @period.id %>"});
+    };
+
+		YAHOO.example.XHR_PATHS = new function() {
+        var myColumnDefs = [
+            {key:"domain", label:"Name", sortable:true},
+            {key:"path", label:"Path", sortable:true},
+            {key:"response_count", label:"Accesses", sortable:true},
+            {key:"average_response_time", label:"Average Response Time", sortable:true, formatter: formatResponseTime },
+            {key:"response_bytes", label:"Bytes Transferred", sortable:true, formatter: formatBytes },
+            {key:"average_response_bytes", label:"Average Bytes Transferred", sortable:true, formatter: formatBytes }
+        ];
+
+        this.myDataSource = new YAHOO.util.DataSource("./paths_data?period_id=<%= @period.id %>");
+        this.myDataSource.connMethodPost = true;
+        this.myDataSource.responseType = YAHOO.util.DataSource.TYPE_XML;
+        this.myDataSource.responseSchema = {
+            resultNode: "Result",
+            fields: ["domain","path", "response_bytes",
+										 { key: "response_count", parser: YAHOO.util.DataSource.parseNumber },
+										 { key: "average_response_time", parser: YAHOO.util.DataSource.parseNumber },
+ 										 { key: "response_bytes", parser: YAHOO.util.DataSource.parseNumber },
+										 { key: "average_response_bytes", parser: YAHOO.util.DataSource.parseNumber }
+										]
+        };
+
+        this.myDataTable = new YAHOO.widget.DataTable("paths", myColumnDefs,
+                this.myDataSource, {initialRequest:"./paths_data?period_id=<%= @period.id %>"});
+    };
+
+    var tabView = new YAHOO.widget.TabView('demo');
+
+    YAHOO.log("The example has finished loading; as you interact with it, you'll see log messages appearing here.", "info", "example");
+
+
+});
+</script>
+
+
+
+The latest period loaded into the system is for <%= @period.start %> - <%= @period.finish %>
+
+
+<div id="demo" class="yui-navset">
+    <ul class="yui-nav">
+        <li class="selected"><a href="#tab1"><em>Totals</em></a></li>
+        <li><a href="#tab2"><em>Domains</em></a></li>
+        <li><a href="#tab3"><em>Paths</em></a></li>
+        <li><a href="#tab4"><em>Sources</em></a></li>
+
+    </ul>            
+    <div class="yui-content">
+        <div id="tab1"><p><%= render :partial => 'totals' %></p></div>
+        <div id="tab2"><p><%= render :partial => 'domains' %></p></div>
+        <div id="tab3"><p><%= render :partial => 'paths' %></p></div>
+        <div id="tab4"><p><%= render :partial => 'sources' %></p></div>
+    </div>
+</div>
+
+
