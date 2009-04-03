@@ -1,0 +1,24 @@
+[submodule "vendor/plugins/feed-normalizer"]
+	path = vendor/plugins/feed-normalizer
+	url = git://github.com/aasmith/feed-normalizer.git
+[submodule "vendor/plugins/calendar_date_select"]
+	path = vendor/plugins/calendar_date_select
+	url = git://github.com/timcharper/calendar_date_select.git
+[submodule "vendor/plugins/jira4r"]
+	path = vendor/plugins/jira4r
+	url = ssh://git@git.rubyhaus.org/jira4r-git.git
+[submodule "vendor/plugins/redhillonrails_core"]
+	path = vendor/plugins/redhillonrails_core
+	url = git://github.com/harukizaemon/redhillonrails_core.git
+[submodule "vendor/plugins/foreign_key_migrations"]
+	path = vendor/plugins/foreign_key_migrations
+	url = git://github.com/harukizaemon/foreign_key_migrations.git
+[submodule "vendor/plugins/transactional_migrations"]
+	path = vendor/plugins/transactional_migrations
+	url = git://github.com/harukizaemon/transactional_migrations.git
+[submodule "vendor/plugins/acts_as_tree"]
+	path = vendor/plugins/acts_as_tree
+	url = git://github.com/rails/acts_as_tree.git
+[submodule "vendor/plugins/open_flash_chart"]
+	path = vendor/plugins/open_flash_chart
+	url = git://github.com/pullmonkey/open_flash_chart.git
