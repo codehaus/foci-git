@@ -4,6 +4,9 @@
 # Code is not reloaded between requests
 config.cache_classes = true
 
+# Enable threaded mode
+# config.threadsafe!
+
 # Use a different logger for distributed setups
 # config.logger = SyslogLogger.new
 
@@ -11,17 +14,11 @@ config.cache_classes = true
 config.action_controller.consider_all_requests_local = false
 config.action_controller.perform_caching             = true
 
+# Use a different cache store in production
+# config.cache_store = :mem_cache_store
+
 # Enable serving of images, stylesheets, and javascripts from an asset server
 # config.action_controller.asset_host                  = "http://assets.example.com"
 
-# Disable delivery errors if you bad email addresses should just be ignored
+# Disable delivery errors, bad email addresses will be ignored
 # config.action_mailer.raise_delivery_errors = false
-
-
-ActiveRecord::Base.colorize_logging = false
-
-
-config.action_controller.session = { 
-  :session_key => "foci", 
-  :secret => IO.readlines('/etc/keys/foci.txt').join('')
-}
