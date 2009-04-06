@@ -30,10 +30,21 @@ ssh_options[:forward_agent] = true
 # Repository options
 set :scm, "git"
 set :git_enable_submodules, 1
-set :repository,  "git://git.rubyhaus.org/foci.git"
+set :repository,  "git://git.rubyhaus.org/foci-git.git"
 set :branch, "master"
 
 # Deployment options
 set :deploy_via, :remote_cache
 set :use_sudo, false
+
+
+
+
+# A Passenger based restart routine
+namespace :deploy do
+  task :restart, :roles => :web do
+    #Restart
+    run "touch #{current_path}/tmp/restart.txt"
+  end
+end
 
