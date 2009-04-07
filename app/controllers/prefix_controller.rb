@@ -23,6 +23,14 @@ class PrefixController < ApplicationController
     @period = params[:period] || Chronic.parse('now').strftime('%b %Y')
   end
   
+  def simple_test
+    cache_mutex('simple_test') { 
+      logger.info "Sleeping"
+      sleep((params[:sleep] || '5').to_f)
+      logger.info "Done"
+    }
+  end
+  
   def simple_data
     puts params.inspect
     @prefix = params[:prefix].downcase
