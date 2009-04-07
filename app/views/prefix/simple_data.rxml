@@ -1,5 +1,5 @@
 cache :vhost => @vhost.host, :prefix => @prefix, :period => @start.strftime('%b%Y') do
-  cache_mutex("basic.cache") do
+  cache_mutex("basic.cache") {
     @records = PathTotal.find_by_sql([ @sql, *@sql_args])
   
     xml.instruct! :xml, :version=>"1.0" 
@@ -16,5 +16,5 @@ cache :vhost => @vhost.host, :prefix => @prefix, :period => @start.strftime('%b%
         }
       }
     }
-  end
+  }
 end
