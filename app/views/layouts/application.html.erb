@@ -12,157 +12,129 @@
     <link rel="icon" href="/favicon.ico" type="image/x-icon" />
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" /> 
         
-		<link rel="stylesheet" type="text/css" href="/stylesheets/foci.css"/> 
+    <link rel="stylesheet" type="text/css" href="/stylesheets/application.css"/> 
 
-		<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.5.1/build/reset-fonts-grids/reset-fonts-grids.css"/> 
-		<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.5.1/build/assets/skins/sam/skin.css"/> 
-		<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.5.1/build/tabview/assets/skins/sam/tabview.css" />
-		<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.5.1/build/fonts/fonts-min.css" />
-		<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.5.1/build/datatable/assets/skins/sam/datatable.css" />
-		
-		<%= javascript_include_tag :defaults %>
-		
-		<script type="text/javascript" src="http://yui.yahooapis.com/2.5.1/build/yahoo-dom-event/yahoo-dom-event.js"></script>
-		<script type="text/javascript" src="http://yui.yahooapis.com/2.5.1/build/connection/connection-min.js"></script>
+    <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.5.1/build/reset-fonts-grids/reset-fonts-grids.css"/> 
+    <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.5.1/build/assets/skins/sam/skin.css"/> 
+    <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.5.1/build/tabview/assets/skins/sam/tabview.css" />
+    <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.5.1/build/fonts/fonts-min.css" />
+    <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.5.1/build/datatable/assets/skins/sam/datatable.css" />
+    
+    <%= javascript_include_tag :defaults %>
+    
+    <script type="text/javascript" src="http://yui.yahooapis.com/2.5.1/build/yahoo-dom-event/yahoo-dom-event.js"></script>
+    <script type="text/javascript" src="http://yui.yahooapis.com/2.5.1/build/connection/connection-min.js"></script>
 
-		<script type="text/javascript" src="http://yui.yahooapis.com/2.5.1/build/element/element-beta-min.js"></script>
-		<script type="text/javascript" src="http://yui.yahooapis.com/2.5.1/build/datasource/datasource-beta-min.js"></script>
-		<script type="text/javascript" src="http://yui.yahooapis.com/2.5.1/build/datatable/datatable-beta-min.js"></script>
-		<script type="text/javascript" src="http://yui.yahooapis.com/2.5.1/build/tabview/tabview-min.js"></script>
+    <script type="text/javascript" src="http://yui.yahooapis.com/2.5.1/build/element/element-beta-min.js"></script>
+    <script type="text/javascript" src="http://yui.yahooapis.com/2.5.1/build/datasource/datasource-beta-min.js"></script>
+    <script type="text/javascript" src="http://yui.yahooapis.com/2.5.1/build/datatable/datatable-beta-min.js"></script>
+    <script type="text/javascript" src="http://yui.yahooapis.com/2.5.1/build/tabview/tabview-min.js"></script>
 
   </head>
 
   <body class='yui-skin-sam'>
-		<div id='doc3' class='yui-t4'>
-			<div id='hd'>
-				<table style='width: 100%' id='leftHeader'>
-					<tr>
-						<td style='text-align: left'>
-					<div style='padding: 0.5em'>
-						<h1>Codehaus Foundation Logs</h1>
-						<h2><%= @page_title %></h2>
-					</div>
-					</td>
-					<td style='text-align: right'>
-			       <p><a href="/"><%= image_tag 'foci.png' %></a></p>
-					</td>
-				</tr>
-				</table>
+    <div id='doc3' class='yui-t4'>
+      <div id='hd'>
+        <table style='width: 100%' id='leftHeader'>
+          <tr>
+            <td style='text-align: left'>
+          <div style='padding: 0.5em'>
+            <h1>Codehaus Foundation Logs</h1>
+            <h2><%= @page_title %></h2>
+          </div>
+          </td>
+          <td style='text-align: right'>
+             <p><a href="/"><%= image_tag 'foci.png' %></a></p>
+          </td>
+        </tr>
+        </table>
 
-				
-			 <div id='tophelper' class='yuimenubar'>
-				<table><tr>
-			   <td id="breadcrumbs">
-			    <a href="/">Home</a> |
-			    <a href="/search">Search</a> 
-			    <% if @vhost %>
-			      |
-			      <% 
-							tmp_vhosts = []
-							tmp_links = []
-							tmp_vhost = @vhost
-							while tmp_vhost 
-								tmp_vhosts << tmp_vhost
-								tmp_links << link_to( tmp_vhost.host_brief, { :controller => '/vhosts', :vhost => tmp_vhost.host }, { :title => tmp_vhost.host } )
-								tmp_vhost = tmp_vhost.parent
-							end
-						 %>
-						<%= tmp_links.join('&nbsp;&raquo;&nbsp;') %>
-			    <% end %>
-			  </td>
-			  <td id="quicklinks">
-		      <%= link_to 'codehaus', :controller => 'vhosts', :vhost => 'codehaus.org' %> |
-		      <%= link_to 'rubyhaus', :controller => 'vhosts', :vhost => 'rubyhaus.org' %> |
-		      <%= link_to 'foci', :controller => 'vhosts', :vhost => 'foci.rubyhaus.org' %>
-			  </td>
-			  </tr></table>
-			</div>
-		
-			</div>
-			
-			<div id='bd'>
-				<div id='yui-main'>
-					<div class='yui-b'>
-						<% if ads %>
-						<div class='google-ad google-ad-728x90'>
-							<script type="text/javascript"><!--
-							google_ad_client = "pub-3023399591478482";
-							google_ad_width = 728;
-							google_ad_height = 90;
-							google_ad_format = "728x90_as";
-							google_ad_channel = "7321085054"; //unity-top
-							google_color_border = "FFFFFF";
-							google_color_bg = "FFFFFF";
-							google_color_link = "2266cc";
-							google_color_url = "2266cc";
-							google_color_text = "000000";
-							//--></script>
-							<script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
-							</script>
-						</div>
-						<% end %>
+        
+       <%= render :partial => '/layouts/top_helper' %>
+    
+      </div>
+      
+      <div id='bd'>
+        <div id='yui-main'>
+          <div class='yui-b'>
+            <% if ads %>
+            <div class='google-ad google-ad-728x90'>
+              <script type="text/javascript"><!--
+              google_ad_client = "pub-3023399591478482";
+              google_ad_width = 728;
+              google_ad_height = 90;
+              google_ad_format = "728x90_as";
+              google_ad_channel = "7321085054"; //unity-top
+              google_color_border = "FFFFFF";
+              google_color_bg = "FFFFFF";
+              google_color_link = "2266cc";
+              google_color_url = "2266cc";
+              google_color_text = "000000";
+              //--></script>
+              <script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+              </script>
+            </div>
+            <% end %>
 
 
-						<h3 class="headerstyle" id="upage_title">
-						 <table style="width: 100%; padding-right: 2mm">
-						   <tr>
-						     <td align="left" valign="middle"><%= @page_title %></td>
-						     <td align="right" valign="middle">
-							
-									 <!--a id='page-comment' title="Add comment to Wiki" href="http://docs.codehaus.org/display/${space.spaceKey}/${page.pageKeyEncoded}?showComments=true&amp;showCommentArea=true#addcomment"></a>
-    				       <a id='page-view' title="View in Wiki" href="http://docs.codehaus.org/display/${space.spaceKey}/${page.pageKeyEncoded}"></a>
-						       <a id='page-edit' title="Edit Wiki page" href="http://docs.codehaus.org/pages/editpage.action?spaceKey=${space.spaceKey}&amp;title=${page.pageKeyEncoded}"></a>
-						       <a id='page-print' title="Printable Version" href="/${page.pageKeyEncoded}?print=1"></a-->
-						     </td>
-								</tr>
-						 </table>
-						</h3>
-				
-				
-						<div class="content" style="padding-top: 3mm;">
-						   <%= content = yield %>
-					  </div>
-						<% if ads %>
-						<div class="google-ad google-ad-728x90">
-						<script type="text/javascript"><!--
-						google_ad_client = "pub-3023399591478482";
-						google_ad_width = 728;
-						google_ad_height = 90;
-						google_ad_format = "728x90_as";
-						google_ad_channel ="9744516269"; //unity-bottom
-						google_color_border = "FFFFFF";
-						google_color_bg = "FAFAFF";
-						google_color_link = "2266cc";
-						google_color_url = "2266cc";
-						google_color_text = "000000";
-						//--></script>
-						<script type="text/javascript"
-						  src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
-						</script>
-						</div>
-						<% end %>
+            <h3 class="headerstyle" id="upage_title">
+             <table style="width: 100%; padding-right: 2mm">
+               <tr>
+                 <td align="left" valign="middle"><%= @page_title %></td>
+                 <td align="right" valign="middle">
+              
+                   <!--a id='page-comment' title="Add comment to Wiki" href="http://docs.codehaus.org/display/${space.spaceKey}/${page.pageKeyEncoded}?showComments=true&amp;showCommentArea=true#addcomment"></a>
+                   <a id='page-view' title="View in Wiki" href="http://docs.codehaus.org/display/${space.spaceKey}/${page.pageKeyEncoded}"></a>
+                   <a id='page-edit' title="Edit Wiki page" href="http://docs.codehaus.org/pages/editpage.action?spaceKey=${space.spaceKey}&amp;title=${page.pageKeyEncoded}"></a>
+                   <a id='page-print' title="Printable Version" href="/${page.pageKeyEncoded}?print=1"></a-->
+                 </td>
+                </tr>
+             </table>
+            </h3>
+        
+        
+            <div class="content" style="padding-top: 3mm;">
+               <%= content = yield %>
+            </div>
+            <% if ads %>
+            <div class="google-ad google-ad-728x90">
+            <script type="text/javascript"><!--
+            google_ad_client = "pub-3023399591478482";
+            google_ad_width = 728;
+            google_ad_height = 90;
+            google_ad_format = "728x90_as";
+            google_ad_channel ="9744516269"; //unity-bottom
+            google_color_border = "FFFFFF";
+            google_color_bg = "FAFAFF";
+            google_color_link = "2266cc";
+            google_color_url = "2266cc";
+            google_color_text = "000000";
+            //--></script>
+            <script type="text/javascript"
+              src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+            </script>
+            </div>
+            <% end %>
 
-				</div>
-				</div>
-				
+        </div>
+        </div>
+        
 
-				<div class="yui-b navigation">
-		     
-				
-				<h1 class="headerstyle">Links</h1>
-				<ul>
-				 <li><a href="http://codehaus.org/">Codehaus</a></li>
-				 <li><a href="http://rubyhaus.org/">Rubyhaus</a></li>
-				</ul>
-				
-				
-	    	</div>
-			</div>
+        <div class="yui-b navigation">
+         
+        
+        <h1 class="headerstyle">Links</h1>
+        <ul>
+         <li><a href="http://codehaus.org/">Codehaus</a></li>
+         <li><a href="http://rubyhaus.org/">Rubyhaus</a></li>
+        </ul>
+        
+        
+        </div>
+      </div>
 
-			<div id='ft' class='yuimenubar'>
-				&copy; 2006-2008 Codehaus <%= @core_vhost ? '| ' + @core_vhost.host : '' %>
-			</div>
-		</div>
+      <%= render( :partial => '/layouts/footer' ) %>
+    </div>
     
   </body>
 </html>
