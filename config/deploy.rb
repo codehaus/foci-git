@@ -48,3 +48,11 @@ namespace :deploy do
   end
 end
 
+task :after_update_code, :roles => [ :app ] do
+  run <<-CMD
+    mkdir -p #{shared_path}/tmp/sessions &&
+    rm -rf #{release_path}/tmp &&
+    ln -nfs #{shared_path}/tmp #{release_path}/tmp
+  CMD
+end
+

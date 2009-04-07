@@ -22,20 +22,25 @@ module ApplicationHelper
   
   def cache_mutex(name)
     gotlock = false
-    mutex = Rails.cache.fetch('cache.mutex') {
-      gotlock = true
-      name
-    }
+    begin
+      logger.info "Starting cache_mutex"
+      mutex = Rails.cache.fetch('cache.mutex') {
+        logger.info "Got cache_mutex"
+        gotlock = true
+        name
+      }
     
-    if not gotlock
-      render :status => 500, :text => "Unable to complete - already running a generation job - #{mutex}"
-      return 
-    else
-      begin
+      if not gotlock
+        logger.info "Rendering text"
+        render :status => 500, :text => "Unable to complete - already running a generation job - #{mutex}"
+        return
+      else
+        logger.info "Yielding"
         yield
-      ensure
-        Rails.cache.delete('cache.mutex')
       end
+    ensure
+      logger.info "Deleting mutex"
+      Rails.cache.delete('cache.mutex') if gotlock
     end
   end
 
