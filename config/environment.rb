@@ -77,4 +77,19 @@ end
 
 
 
-ActionController::Base.cache_store = :file_store, "tmp/cache"
+
+
+memcache_options = {
+    :c_threshold => 10000,
+    :compression => true,
+    :debug => false,
+    :namespace => "xircles-#{RAILS_ENV}",
+    :readonly => false,
+    :urlencode => false
+}
+
+CACHE = MemCache.new( memcache_options )
+CACHE.servers = 'localhost:11211'
+
+#ActionController::Base.cache_store = :mem_cache_store, "localhost:11211"
+#ActionController::Base.cache_store = :file_store, "tmp/cache"
