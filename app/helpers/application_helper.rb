@@ -28,7 +28,8 @@ module ApplicationHelper
     }
     
     if not gotlock
-      return "Unable to complete - already running a generation job - #{mutex}"
+      render :status => 500, :text => "Unable to complete - already running a generation job - #{mutex}"
+      return 
     else
       begin
         yield

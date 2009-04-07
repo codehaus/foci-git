@@ -1,0 +1,25 @@
+- @page_title = 'FOCI!'
+
+.yui-g
+  .yui-u.first
+    - if @vhost
+      == Welcome to all the web stats for #{ @vhost }!
+    - else
+      Welcome to all the web stats!
+    
+  .yui-u
+    .panel
+      %h1 Links
+      .content
+        %li= link_to 'Codehaus', 'http://codehaus.org/'
+        %li= link_to 'Rubyhaus', 'http://rubyhaus.org/'
+
+    .panel
+      - top_report_type = TopReportType.find_by_key('TOPVHOSTS')
+      - if top_report_type
+        %h1= top_report_type.title
+      
+        .content
+          = render_top_reports(top_report_type)
+      
+      
