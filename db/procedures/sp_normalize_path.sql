@@ -18,7 +18,11 @@
 CREATE OR REPLACE FUNCTION sp_normalize_path() RETURNS void AS $$
 BEGIN
     SET SORT_MEM = '1GB'; -- Improves join performance
-    
+
+    BEGIN TRANSACTION;;
+    LOCK TABLE RAW_LINES IN EXCLUSIVE MODE NOWAIT;
+
+
     RAISE NOTICE 'Clearing PATH_ID';
     -- Clear existing path - typically they will be NULL anyway
     UPDATE RAW_LINES
@@ -51,11 +55,23 @@ BEGIN
     
     RAISE NOTICE 'Looking up paths';
 
+    -- Update blanks
+    UPDATE RAW_LINES RL
+       SET PATH_ID = P.ID
+      FROM PATHS P
+     WHERE RL.PATH_NORMALIZED = P.PATH
+       AND RL.PATH_NORMALIZED = ''
+       AND P.PATH = '';
+
     -- Update all existing paths
     UPDATE RAW_LINES RL
-    SET PATH_ID = P.ID
-    FROM PATHS P
-    WHERE RL.PATH_NORMALIZED = P.PATH;
+       SET PATH_ID = P.ID
+      FROM PATHS P
+     WHERE RL.PATH_NORMALIZED = P.PATH
+       AND RL.PATH_NORMALIZED <> '';
+    
+    -- UPDATE RAW_LINES RL
+    -- SET PATH_ID = (SELECT P.ID FROM PATHS P WHERE RL.PATH_NORMALIZED = P.PATH)
     
     RAISE NOTICE 'Creating missing paths';
     -- Create the missing paths
@@ -76,6 +92,8 @@ BEGIN
     WHERE RL.PATH_NORMALIZED = P.PATH
       AND RL.PATH_ID IS NULL;
     
+    COMMIT TRANSACTION;
+
     RAISE NOTICE 'Complete';
     
     RETURN;

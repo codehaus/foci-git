@@ -19,5 +19,23 @@ module ApplicationHelper
     end
     html << "</table>"
   end
+  
+  def cache_mutex(name)
+    gotlock = false
+    mutex = Rails.cache.fetch('cache.mutex') {
+      gotlock = true
+      name
+    }
+    
+    if not gotlock
+      return "Unable to complete - already running a generation job - #{mutex}"
+    else
+      begin
+        yield
+      ensure
+        Rails.cache.delete('cache.mutex')
+      end
+    end
+  end
 
 end
