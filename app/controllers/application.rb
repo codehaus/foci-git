@@ -30,6 +30,31 @@ class ApplicationController < ActionController::Base
   # from your application log (in this case, all fields with names like "password").
   # filter_parameter_logging :password
   
+  helper_method :cache_mutex
+  def cache_mutex(name)
+    gotlock = false
+    begin
+      logger.info "Starting cache_mutex"
+      mutex = Rails.cache.fetch('cache.mutex') {
+        logger.info "Got cache_mutex"
+        gotlock = true
+        name
+      }
+    
+      if not gotlock
+        logger.info "Rendering text"
+        render :status => 500, :text => "Unable to complete - already running a generation job - #{mutex}"
+        return
+      else
+        logger.info "Yielding"
+        yield
+      end
+    ensure
+      logger.info "Deleting mutex"
+      Rails.cache.delete('cache.mutex') if gotlock
+    end
+  end
+  
 protected
   # Finds a vhost for the current site, based on the request header
   def filter_host

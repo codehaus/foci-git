@@ -28,6 +28,7 @@ class PrefixController < ApplicationController
       logger.info "Sleeping"
       sleep((params[:sleep] || '5').to_f)
       logger.info "Done"
+      render :text => (params[:message] || 'whatever')
     }
   end
   
