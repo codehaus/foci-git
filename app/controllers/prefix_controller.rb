@@ -64,7 +64,7 @@ class PrefixController < ApplicationController
       to_char(pd.start, 'YYYYMM') DESC, 
       sum(response_bytes) desc;
 EOF
-    @sql_args = [ '/#{@prefix}/%', @start, @finish ]
+    @sql_args = [ "/#{@prefix}/%", @start, @finish ]
     return render( :layout => false )
   end
 end
