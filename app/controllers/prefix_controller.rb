@@ -74,6 +74,9 @@ class PrefixController < ApplicationController
       sum(response_bytes) desc;
 EOF
     @sql_args = [ "/#{@prefix}/%", @start, @finish ]
-    return render( :layout => false )
+    
+    cache_mutex("basic.cache") {
+      return render( :layout => false )
+    }
   end
 end
