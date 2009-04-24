@@ -47,8 +47,7 @@ class ApplicationController < ActionController::Base
         return
       else
         logger.info "Yielding"
-        yield
-        return 
+        return yield
       end
     ensure
       logger.info "Deleting mutex"
