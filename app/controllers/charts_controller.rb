@@ -125,7 +125,9 @@ EOF
 
       render :text => g.render
     end
-private
+
+  private
+
   def filter_interval
     @interval = parse_interval(params[:interval]).downcase
   end

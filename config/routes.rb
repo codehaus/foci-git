@@ -16,32 +16,27 @@
 
 ActionController::Routing::Routes.draw do |map|
   
-  map.connect '/',
-    :controller => 'home'
+  map.root :controller => 'home', :conditions => { :method => :get }
+  map.resources :charts, :only => :index,
+                         :collection => { :sources_per_day => :get,
+                                          :sources_per_day_data => :get,
+                                          :historical_load => :get,
+                                          :historical_load_data => :get }
 
-  map.connect '/search',
-   :controller => 'search'
-  
-  map.connect '/vhosts/:vhost',
-   :controller => 'vhosts',
-   :action => 'index',
-   :requirements => { :vhost => /[a-z0-9\-\.]*/ }
+  map.resources :core, :only => :index, :controller => 'core'
+  map.resource :prefix, :only => :none, :controller => 'prefix',
+                         :member => { :simple => :get, :simple_test => :get,
+                                      :simple_data => :get }
 
-  map.connect '/vhosts/:vhost/:action',
-    :controller => 'vhosts',
-    :requirements => { :vhost => /[a-z0-9\-\.]*/ }
-    
+  map.resources :search, :only => :index, :controller => 'search',
+                         :collection => { :index => [:get, :post] }
+  map.resources :sources, :only => :none, :collection => { :list => :get } 
+  map.resources :status, :only => :index, :controller => 'status',
+                         :collection => { :sources_data => :get,
+                                          :totals_data => :get,
+                                          :domains_data => :get,
+                                          :paths_data => :get }
 
-  map.connect '/sources/:action',
-    :controller => 'sources'
-
-  map.connect '/status/:action', 
-    :controller => 'status'
-    
-  map.connect '/charts/:action', 
-    :controller => 'charts'
-    
-  map.connect '/prefix/:action', 
-    :controller => 'prefix'
-
+  map.resources :vhosts, :only => :index,
+                         :requirements => { :vhost => /[a-z0-9\-\.]*/ }
 end

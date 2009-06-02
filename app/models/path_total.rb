@@ -85,10 +85,10 @@ EOF
   
   def self.update_hot_domains
   end
-private
+
+  private
+
   def self.log(msg)
     puts msg
   end
-    
-  
 end

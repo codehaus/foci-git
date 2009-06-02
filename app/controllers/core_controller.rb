@@ -24,4 +24,9 @@ class CoreController < ApplicationController
     @recent_periods = Period.find_recent(@vhost)
   end
   
+  private
+
+  def filter_vhost
+    @vhost = params[:vhost]
+  end
 end

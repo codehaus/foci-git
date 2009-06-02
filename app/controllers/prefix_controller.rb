@@ -24,12 +24,12 @@ class PrefixController < ApplicationController
   end
   
   def simple_test
-    cache_mutex('simple_test') { 
+    cache_mutex('simple_test') do 
       logger.info "Sleeping"
       sleep((params[:sleep] || '5').to_f)
       logger.info "Done"
       render :text => (params[:message] || 'whatever')
-    }
+    end
   end
   
   def simple_data
@@ -38,6 +38,7 @@ class PrefixController < ApplicationController
     @host = params[:host]
     @period = params[:period] || Chronic.parse('now').strftime('%b %Y')
     return render( :text => 'illegal prefix' ) if @prefix !~ /^[a-z0-9\.\-\/]+$/
+
     puts "Looking for host: #{@host}"
     @vhost = Vhost.find_by_host(@host)
     return render( :text => 'illegal host' ) if not @vhost
@@ -46,7 +47,8 @@ class PrefixController < ApplicationController
     #require 'chronic'
     #@period = 'dec 2008'
     @start = Chronic.parse("12am", :now => Chronic.parse("1 #{@period}"))
-    @finish = Chronic.parse("11:59:59pm", :now => Chronic.parse('1 month after', :now => @start)) - 86400
+    @finish = Chronic.parse("11:59:59pm", :now => Chronic.parse('1 month after',
+                                                        :now => @start)) - 86400
     puts "Prefix search: #{@prefix}"
     @sql = <<-EOF
     select
@@ -61,7 +63,7 @@ class PrefixController < ApplicationController
       paths p, 
       periods pd
     where 
-          vhost_id = (select id from vhosts where host = '#{@vhost.host}') 
+      vhost_id = (select id from vhosts where host = '#{@vhost.host}') 
       and pt.path_id = p.id 
       and p.path LIKE ?
       and pd.id = pt.period_id
@@ -75,8 +77,8 @@ class PrefixController < ApplicationController
 EOF
     @sql_args = [ "/#{@prefix}/%", @start, @finish ]
     
-    cache_mutex("basic.cache") {
+    cache_mutex("basic.cache") do
       return render( :layout => false )
-    }
+    end
   end
 end

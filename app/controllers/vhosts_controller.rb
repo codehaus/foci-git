@@ -39,8 +39,5 @@ class VhostsController < ApplicationController
     @totals = PathTotal.totals_for_vhost_period( @vhost, @period  )
     
     @recent_periods = Period.find_recent(@vhost)
-    
   end
-  
-  
 end

@@ -17,7 +17,6 @@
 require 'parsedate'
 require 'find'
 
-
 class Foci::LoadData
   attr_accessor :source
   attr_accessor :logger
@@ -108,7 +107,8 @@ class Foci::LoadData
     if @source
       if @source.loaded
         if @incremental and source_size != @source.size
-          @logger.info("#{source} already loaded; however incremental mode is enabled and the size is different")
+          @logger.info("#{source} already loaded; however incremental mode " +
+                       "is enabled and the size is different")
           @skip = @source.line_count
         else
           @logger.info("#{source} already loaded")
@@ -178,14 +178,14 @@ class Foci::LoadData
             line = io.readline
             index = index + 1
             
-            #If we need to skip some lines...
+            # If we need to skip some lines...
             if @skip > 0
               @skip = @skip - 1
               next
             end
 
             if line.length > 4000
-               #It'll be spam... ignore
+               # It'll be spam... ignore
                puts "Spam access length: #{line.length}"
                next
             end
@@ -195,24 +195,30 @@ class Foci::LoadData
 
           load_lines(buffer, index)
           delta = Time.now.to_f - batch_start
-          @logger.info "#{index} (#{batch_size}) rows processed in #{sprintf('%2.2f', delta)} seconds (#{sprintf('%2.2f', batch_size / delta)} lines/second)" 
+          @logger.info "#{index} (#{batch_size}) rows processed in " +
+                       "#{sprintf('%2.2f', delta)} seconds (" +
+                       "#{sprintf('%2.2f', batch_size / delta)} lines/second)" 
           buffer.clear
         end
       rescue EOFError => e
-        #All good - EOF is expected at some point
+        # All good - EOF is expected at some point
       end
       
       load_lines(buffer, index)
       delta = Time.now.to_f - batch_start
-      @logger.info "#{index} (#{batch_size}) rows processed in #{sprintf('%2.2f', delta)} seconds (#{sprintf('%2.2f', batch_size / delta)} lines/second)" 
+      @logger.info "#{index} (#{batch_size}) rows processed in " +
+                   "#{sprintf('%2.2f', delta)} seconds (" +
+                   "#{sprintf('%2.2f', batch_size / delta)} lines/second)" 
       buffer.clear
       
       delta = Time.now.to_f - all_start
-      @logger.info "OVERALL: #{index - @skip}) rows processed in #{sprintf('%2.2f', delta)} seconds (#{sprintf('%2.2f', (index - @skip) / delta)} lines/second)" 
+      @logger.info "OVERALL: #{index - @skip}) rows processed in " +
+                   "#{sprintf('%2.2f', delta)} seconds (" +
+                   "#{sprintf('%2.2f', (index - @skip) / delta)} lines/second)" 
     }
     end_copy
     
-    sqlexec("VACUUM ANALYZE RAW_LINES") #Quick; and reclaims deleted space
+    sqlexec("VACUUM ANALYZE RAW_LINES") # Quick; and reclaims deleted space
     
     if not @rejected_lines.empty?
       puts "Storing #{@rejected_lines.length} rejected line(s)"
@@ -229,12 +235,13 @@ class Foci::LoadData
     puts "Done."
     
     if index == @skip
-      #This typically occurs when the file has been compressed and we're rechecking it
+      # This typically occurs when the file has been compressed and
+      # we're rechecking it
       puts "No lines processed, skipping processing"
       return
     end
 
-    #LOTS OF WORK_MEM == FASTER QUERIES
+    # LOTS OF WORK_MEM == FASTER QUERIES
     sqlexec("SET WORK_MEM=65536")
     #sqlexec("SET LOCAL synchronous_commit TO OFF")
     RawLine.exec_normalize_period
@@ -244,7 +251,7 @@ class Foci::LoadData
     #sqlexec("SET LOCAL synchronous_commit TO ON")
     #RawLine.exec_normalize_subnet
     
-    #Now for aggregation
+    # Now for aggregation
     SubnetTotal.exec_aggregate_subnet_total
     PathTotal.exec_aggregate_path_total
     
@@ -261,7 +268,7 @@ class Foci::LoadData
         load_line(line, start + index)
       rescue Exception => e
         puts "Failure parsing (#{e}): #{line}"
-        #Can't do AR directly here because of the COPY in progress
+        # Can't do AR directly here because of the COPY in progress
         rl = {}
         rl[:source_id] = @source.id
         rl[:line_number] = start + index
@@ -289,7 +296,7 @@ class Foci::LoadData
     path ||= fields[:request]
     path ||= ''
     
-    #Remove the GET / POST and the HTTP/1.1 junk
+    # Remove the GET / POST and the HTTP/1.1 junk
     path_pieces = path.split(' ')
     if path_pieces.length < 2 || path_pieces.length > 3
       raise "Bad line: wrong number of spaces (#{path_pieces.length})!"
@@ -297,20 +304,21 @@ class Foci::LoadData
     
     method = path_pieces[0]
     path = path_pieces[1]
-    #http = path_pieces[2] #We don't use it - and it's not always provided
+    #http = path_pieces[2] # We don't use it - and it's not always provided
     
     if method.length > 10
       raise "Bad line: method was more than 10 characters - bad line presumably"
     end
     
     
-    #Strip off trailer
+    # Strip off trailer
     path = path.split('?')
     if path
       path = path.first
-      #Cut it down to something sensible; this help avoid duplicate path entries for the same file
+      # Cut it down to something sensible; this help avoid duplicate path
+      # entries for the same file
       path = Path.normalize_path(path)
-      #Limit to reasonable length
+      # Limit to reasonable length
       path = path[0..254]
       path.strip!
     else
@@ -342,18 +350,20 @@ class Foci::LoadData
   def start_copy
     raise "copy already started" if @raw_conn
     # CUSTOMSQL create dynamic import sql code using 'COPY FROM' sql statement
-    #Needs to match split_line
-    field_names = ['source_id', 'ip', 'auth', 'username', 'datetime', 'request', 'method', 'path', 'status', 'bytecount', 'host', 'duration']
+    # Needs to match split_line
+    field_names = ['source_id', 'ip', 'auth', 'username', 'datetime', 'request',
+                   'method', 'path', 'status', 'bytecount', 'host', 'duration']
     import_sql = ''
     import_sql += "COPY RAW_LINES "
     import_sql += "(#{field_names.join(', ')}) "
     import_sql += "FROM STDIN; "
 
-    # CUSTOMSQL we obtain a raw PGconn SQL connection to the database so we can ship data
-    # directly to STDIN on the Postgres SQL connection
+    # CUSTOMSQL we obtain a raw PGconn SQL connection to the database so we
+    # can ship data directly to STDIN on the Postgres SQL connection
     @raw_conn = ActiveRecord::Base.connection.raw_connection
-    # execute the import SQL, which will leave the connection open so we can ship
-    # raw records directly to STDIN on the server, via PGconn.putline command (below)
+    # execute the import SQL, which will leave the connection open so we can
+    # ship raw records directly to STDIN on the server, via PGconn.putline
+    # command (below)
     
     dump_status('pre copy')
     @raw_conn.exec(import_sql)
@@ -371,7 +381,8 @@ class Foci::LoadData
     @raw_conn.put_copy_end 
     puts "Lines transferred: #{@line_count}"
     if @raw_conn.status != 0
-      raise CoreERR_SQLError, "server reports error code of #{@raw_conn.status}. Status code should have been 0"
+      raise CoreERR_SQLError, "server reports error code of " +
+            "#{@raw_conn.status}. Status code should have been 0"
     end
     @raw_conn = nil
   end

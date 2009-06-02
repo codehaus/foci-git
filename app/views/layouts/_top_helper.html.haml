@@ -20,8 +20,8 @@
         = tmp_links.join('&nbsp;&raquo;&nbsp;')
         
       %td#quicklinks
-        = link_to 'codehaus', :controller => 'vhosts', :vhost => 'codehaus.org'
+        = link_to 'codehaus', vhosts_path(:vhost => 'codehaus.org')
         |
-        = link_to 'rubyhaus', :controller => 'vhosts', :vhost => 'rubyhaus.org'
+        = link_to 'rubyhaus', vhosts_path(:vhost => 'rubyhaus.org')
         |
-        = link_to 'foci', :controller => 'vhosts', :vhost => 'foci.rubyhaus.org'
+        = link_to 'foci', vhosts_path(:vhost => 'foci.rubyhaus.org')

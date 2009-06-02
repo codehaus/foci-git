@@ -16,5 +16,4 @@
 
 class HomeController < ApplicationController
 
-
 end

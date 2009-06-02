@@ -15,10 +15,10 @@ ActiveRecord::Schema.define(:version => 17) do
     t.integer "vhost_id",                                                           :null => false
     t.integer "period_id",                                                          :null => false
     t.integer "path_id",                                                            :null => false
-    t.integer "response_count",                                                     :null => false
-    t.integer "response_bytes",                                                     :null => false
+    t.integer "response_count",        :limit => 8,                                 :null => false
+    t.integer "response_bytes",        :limit => 8,                                 :null => false
     t.integer "response_bytes_square", :limit => 30, :precision => 30, :scale => 0, :null => false
-    t.integer "response_time",                                                      :null => false
+    t.integer "response_time",         :limit => 8,                                 :null => false
     t.integer "response_time_square",  :limit => 30, :precision => 30, :scale => 0, :null => false
   end
 
@@ -106,8 +106,8 @@ ActiveRecord::Schema.define(:version => 17) do
     t.integer "vhost_id",                                                            :null => false
     t.integer "period_id",                                                           :null => false
     t.string  "subnet",                :limit => nil,                                :null => false
-    t.integer "response_count",                                                      :null => false
-    t.integer "response_bytes",                                                      :null => false
+    t.integer "response_count",        :limit => 8,                                  :null => false
+    t.integer "response_bytes",        :limit => 8,                                  :null => false
     t.integer "response_bytes_square", :limit => 30,  :precision => 30, :scale => 0, :null => false
   end
 

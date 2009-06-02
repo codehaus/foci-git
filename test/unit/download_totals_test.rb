@@ -17,7 +17,7 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
 class DownloadTotalsTest < Test::Unit::TestCase
-  fixtures :download_totals
+  #fixtures :download_totals
 
   # Replace this with your real tests.
   def test_truth

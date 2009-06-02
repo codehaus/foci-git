@@ -52,5 +52,3 @@ for path in ARGV
   loader.load( path )
 end
 
-
-

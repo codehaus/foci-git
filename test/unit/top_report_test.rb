@@ -33,7 +33,6 @@ class TopReportTest < ActiveSupport::TestCase
     tr.data_object = datahash
     tr.save!
     
-    
     tr = TopReport.find(:first)
     
     dataobj = tr.data_object

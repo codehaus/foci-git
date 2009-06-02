@@ -13,6 +13,7 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 ################################################################################
+
 # Filters added to this controller apply to all controllers in the application.
 # Likewise, all the methods added will be available for all controllers.
 
@@ -27,28 +28,34 @@ class ApplicationController < ActionController::Base
 
   # See ActionController::Base for details
   # Uncomment this to filter the contents of submitted sensitive data parameters
-  # from your application log (in this case, all fields with names like "password").
+  # from your application log (in this case, all fields with names like
+  # "password").
   # filter_parameter_logging :password
   
   helper_method :cache_mutex
+  
   def cache_mutex(name)
     gotlock = false
     begin
       logger.info "Starting cache_mutex"
-      mutex = Rails.cache.fetch('cache.mutex') {
+      mutex = Rails.cache.fetch('cache.mutex') do
         gotlock = true
         logger.info "Got cache_mutex"
         name
-      }
+      end
     
       if not gotlock
         logger.info "Rendering text"
-        render :status => 500, :text => "Unable to complete - already running a generation job - #{mutex}", :content_type => 'text/plain'
+        render :status => 500, :text => "Unable to complete - already " +
+                                        "running a generation job - #{mutex}",
+               :content_type => 'text/plain'
         return
+
       else
         logger.info "Yielding"
         return yield
       end
+
     ensure
       logger.info "Deleting mutex"
       Rails.cache.delete('cache.mutex') if gotlock
@@ -77,8 +84,10 @@ protected
     return host.split(':')[0]
   end
 
-  #You intentionally can't override a host from the VHost (which means that Apache has applied authentication)
-  #using the parameter (i.e. host header = stats.clown.codehaus.org (your project, authorized), host param = secret.codehaus.org)
+  # You intentionally can't override a host from the VHost (which means that
+  # Apache has applied authentication) using the parameter (i.e. host header =
+  # stats.clown.codehaus.org (your project, authorized), host param =
+  # secret.codehaus.org)
   def get_host
     return request.headers['HTTP_HOST'] if request.headers.has_key?('HTTP_HOST')
       

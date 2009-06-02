@@ -23,13 +23,16 @@ Rails::Initializer.run do |config|
 
   # Specify gems that this application depends on. 
   # They can then be installed with "rake gems:install" on new installations.
-  # You have to specify the :lib option for libraries, where the Gem name (sqlite3-ruby) differs from the file itself (sqlite3)
+  # You have to specify the :lib option for libraries, where the Gem name
+  # (sqlite3-ruby) differs from the file itself (sqlite3)
   # config.gem "bj"
-  # config.gem "hpricot", :version => '0.6', :source => "http://code.whytheluckystiff.net"
+  # config.gem "hpricot", :version => '0.6',
+  #                       :source => "http://code.whytheluckystiff.net"
   # config.gem "sqlite3-ruby", :lib => "sqlite3"
   # config.gem "aws-s3", :lib => "aws/s3"
 
-  # Only load the plugins named here, in the order given. By default, all plugins 
+  # Only load the plugins named here, in the order given. By default, all
+  # plugins 
   # in vendor/plugins are loaded in alphabetical order.
   # :all can be used as a placeholder for all plugins not explicitly named
   # config.plugins = [ :exception_notification, :ssl_requirement, :all ]
@@ -41,14 +44,18 @@ Rails::Initializer.run do |config|
   # (by default production uses :info, the others :debug)
   # config.log_level = :debug
 
-  # Make Time.zone default to the specified zone, and make Active Record store time values
-  # in the database in UTC, and return them converted to the specified local zone.
-  # Run "rake -D time" for a list of tasks for finding time zone names. Comment line to use default local time.
+  # Make Time.zone default to the specified zone, and make Active Record store
+  # time values in the database in UTC, and return them converted to the
+  # specified local zone.
+  # Run "rake -D time" for a list of tasks for finding time zone names. Comment
+  # line to use default local time.
   config.time_zone = 'UTC'
 
-  # The internationalization framework can be changed to have another default locale (standard is :en) or more load paths.
+  # The internationalization framework can be changed to have another default
+  # locale (standard is :en) or more load paths.
   # All files from config/locales/*.rb,yml are added automatically.
-  # config.i18n.load_path << Dir[File.join(RAILS_ROOT, 'my', 'locales', '*.{rb,yml}')]
+  # config.i18n.load_path << Dir[File.join(RAILS_ROOT, 'my', 'locales',
+  #                              '*.{rb,yml}')]
   # config.i18n.default_locale = :de
 
   # Your secret key for verifying cookie session data integrity.
@@ -57,7 +64,9 @@ Rails::Initializer.run do |config|
   # no regular words or you'll be exposed to dictionary attacks.
   config.action_controller.session = {
     :session_key => '_foci_session',
-    :secret      => 'cdf54a74941756861065c8df3d0b7a294c132726af499f274f9b3d5a1e1207844aecac74a2215f8d80983833c010292b9b9c576de708a37dee4c12b1081336b6'
+    :secret      => 'cdf54a74941756861065c8df3d0b7a294c132726af499f274f9b3d5a' +
+                    '1e1207844aecac74a2215f8d80983833c010292b9b9c576de708a37d' +
+                    'ee4c12b1081336b6'
   }
 
   # Use the database for sessions instead of the cookie-based default,
@@ -65,19 +74,17 @@ Rails::Initializer.run do |config|
   # (create the session table with "rake db:sessions:create")
   # config.action_controller.session_store = :active_record_store
 
-  # Use SQL instead of Active Record's schema dumper when creating the test database.
-  # This is necessary if your schema can't be completely dumped by the schema dumper,
-  # like if you have constraints or database-specific column types
+  # Use SQL instead of Active Record's schema dumper when creating the test
+  # database. This is necessary if your schema can't be completely dumped by
+  # the schema dumper, like if you have constraints or database-specific column
+  # types
   # config.active_record.schema_format = :sql
 
   # Activate observers that should always be running
-  # Please note that observers generated using script/generate observer need to have an _observer suffix
+  # Please note that observers generated using script/generate observer need to
+  # have an _observer suffix
   # config.active_record.observers = :cacher, :garbage_collector, :forum_observer
 end
-
-
-
-
 
 memcache_options = {
     :c_threshold => 10000,

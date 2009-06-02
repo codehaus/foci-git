@@ -72,3 +72,4 @@ class Vhost < ActiveRecord::Base
     "Vhost[id=#{id}, host=#{host}]"
   end
 end
+

@@ -1,0 +1,17 @@
+NOTE: This plugin has been retired as the code was rolled into Rails core as of Rails 2.2.
+
+= Transactional Migrations
+
+Transactional Migrations is a plugin that ensures your migration scripts--both 
+up and down--run within a transaction. When used in conjunction with a
+database that supports transactional Data Definition Language (DDL)--such as
+PostgreSQL--this ensures that if any statement within your migration script
+fails, the entire script is rolled-back.
+
+Over and above installing the plugin, no further action is required for the
+transactions to take effect.
+
+=== License
+
+This plugin is copyright 2006 by RedHill Consulting, Pty. Ltd. and is released
+under the MIT license.

@@ -19,7 +19,7 @@ CREATE OR REPLACE FUNCTION sp_normalize_path() RETURNS void AS $$
 BEGIN
     SET SORT_MEM = '1GB'; -- Improves join performance
 
-    BEGIN TRANSACTION;;
+    --BEGIN TRANSACTION;;
     LOCK TABLE RAW_LINES IN EXCLUSIVE MODE NOWAIT;
 
 
