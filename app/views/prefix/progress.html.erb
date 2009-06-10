@@ -1,0 +1,25 @@
+<% @page_title = 'Test' %>
+
+<table>
+  <tr>
+    <td><b>Worker status:</b></td>
+    <td id='worker_status'><%= @worker.ask_result('status') %></td>
+    <%= periodically_check_progress :url => { :action => 'ajax_update' },
+                                    :element => 'worker_status',
+                                    :error => 'error',
+                                    :frequency => 10 %>
+  </tr>
+  <tr>
+    <td><b>Job status:</b></td>
+    <td id='job_status'><%= @worker.ask_result(@job_key + '_status')%></td>
+    <%= periodically_check_progress :url => { :action => 'ajax_update',
+                                              :user_key => @job_key },
+                                    :element => 'job_status',
+                                    :error => 'error',
+                                    :frequency => 10 %>
+  </tr>
+  <tr>
+    <td><b>Your job key:</b></td>
+    <td id='own_job_key'><%=h @job_key %></td>
+  </tr>
+</table>

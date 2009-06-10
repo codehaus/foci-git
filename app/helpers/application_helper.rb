@@ -19,7 +19,4 @@ module ApplicationHelper
     end
     html << "</table>"
   end
-  
-
-
 end

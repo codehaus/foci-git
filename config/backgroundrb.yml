@@ -2,3 +2,12 @@
 :backgroundrb: 
   :ip: 0.0.0.0
   :port: 11006
+  :result_storage: memcache
+  :environment: production
+  :log: background
+  :debug_log: false
+  :persistent_disabled: false # persistent/enqueued task system
+  :persistent_delay: 60 # seconds between each check for enqueued tasks
+
+:memcache: "localhost:11211"
+
