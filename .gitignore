@@ -1,5 +1,9 @@
 /test_data
-routes.txt
+/log
+/tmp
+/config/deploy.rb
+/config/database.yml
+Capfile
 *.swp
 *~
-
+ 
