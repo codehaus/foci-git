@@ -15,7 +15,7 @@
 ################################################################################
 require File.dirname(__FILE__) + '/../../test_helper'
 
-class ParserTest < Test::Unit::TestCase
+class ParserTest < ActiveSupport::TestCase
   
   #all_fixtures
 

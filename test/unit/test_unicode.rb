@@ -17,7 +17,7 @@
 require File.dirname(__FILE__) + '/../test_helper'
 require 'iconv'
 
-class DownloadTotalsTest < Test::Unit::TestCase
+class DownloadTotalsTest < ActiveSupport::TestCase
   fixtures :download_totals
   DATA = '63.246.7.187 - - [22/Mar/2008:09:32:59 -0500] "\xb8:\xcb /user/messages/414?root=haus/codehaus/mevenide HTTP/1.1" 502 413 "http://www.nationallywager.com/betting-on-horse-racing-for.html" "Mozilla/4.0 (compatible; MSIE 5.5; Windows 98; KITV4.7 Wanadoo)" archive.hausfoundation.org 0'
   # Replace this with your real tests.

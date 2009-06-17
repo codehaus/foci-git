@@ -15,6 +15,6 @@
 ################################################################################
 require File.dirname(__FILE__) + '/../test_helper'
 
-class ResponseTimeTest < Test::Unit::TestCase
+class ResponseTimeTest < ActiveSupport::TestCase
 
 end

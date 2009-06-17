@@ -15,7 +15,7 @@
 ################################################################################
 require File.dirname(__FILE__) + '/../test_helper'
 
-class TrafficTotalTest < Test::Unit::TestCase
+class TrafficTotalTest < ActiveSupport::TestCase
   all_fixtures
 
 end

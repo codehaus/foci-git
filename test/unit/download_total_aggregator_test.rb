@@ -16,7 +16,7 @@
 
 require File.dirname(__FILE__) + '/../test_helper'
 
-class Foci::Aggregators::DownloadTotalAggregatorTest < Test::Unit::TestCase
+class Foci::Aggregators::DownloadTotalAggregatorTest < ActiveSupport::TestCase
   all_fixtures
 
   # Replace this with your real tests.

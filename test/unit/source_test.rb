@@ -15,7 +15,7 @@
 ################################################################################
 require File.dirname(__FILE__) + '/../test_helper'
 
-class SourceTest < Test::Unit::TestCase
+class SourceTest < ActiveSupport::TestCase
   all_fixtures
 
 end

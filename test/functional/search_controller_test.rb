@@ -19,7 +19,7 @@ require 'search_controller'
 # Re-raise errors caught by the controller.
 class SearchController; def rescue_action(e) raise e end; end
 
-class SearchControllerTest < Test::Unit::TestCase
+class SearchControllerTest < ActiveSupport::TestCase
   def setup
     @controller = SearchController.new
     @request    = ActionController::TestRequest.new

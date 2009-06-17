@@ -15,7 +15,7 @@
 ################################################################################
 require File.dirname(__FILE__) + '/../test_helper'
 
-class VhostTest < Test::Unit::TestCase
+class VhostTest < ActiveSupport::TestCase
   all_fixtures
 
 end

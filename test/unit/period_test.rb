@@ -15,6 +15,6 @@
 ################################################################################
 require File.dirname(__FILE__) + '/../test_helper'
 
-class PeriodTest < Test::Unit::TestCase
+class PeriodTest < ActiveSupport::TestCase
 
 end

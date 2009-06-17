@@ -19,7 +19,7 @@ require 'sources_controller'
 # Re-raise errors caught by the controller.
 class SourcesController; def rescue_action(e) raise e end; end
 
-class SourcesControllerTest < Test::Unit::TestCase
+class SourcesControllerTest < ActiveSupport::TestCase
   def setup
     @controller = SourcesController.new
     @request    = ActionController::TestRequest.new

@@ -19,7 +19,7 @@ require 'prefix_controller'
 # Re-raise errors caught by the controller.
 class PrefixController; def rescue_action(e) raise e end; end
 
-class PrefixControllerTest < Test::Unit::TestCase
+class PrefixControllerTest < ActiveSupport::TestCase
   def setup
     @controller = PrefixController.new
     @request    = ActionController::TestRequest.new

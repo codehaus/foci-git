@@ -16,7 +16,7 @@
 
 require File.dirname(__FILE__) + '/../test_helper'
 
-class PathTest < Test::Unit::TestCase
+class PathTest < ActiveSupport::TestCase
   all_fixtures
 
   def test_first

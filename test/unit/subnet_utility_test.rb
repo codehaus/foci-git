@@ -15,7 +15,7 @@
 ################################################################################
 require File.dirname(__FILE__) + '/../test_helper'
 
-class SubnetUtilityTest < Test::Unit::TestCase
+class SubnetUtilityTest < ActiveSupport::TestCase
 
   def test_basic
     assert_equal '0.0.0.0', SubnetUtility.integer_to_address(0)

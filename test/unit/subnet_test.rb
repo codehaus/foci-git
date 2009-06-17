@@ -15,6 +15,6 @@
 ################################################################################
 require File.dirname(__FILE__) + '/../test_helper'
 
-class SubnetTest < Test::Unit::TestCase
+class SubnetTest < ActiveSupport::TestCase
   all_fixtures
 end
