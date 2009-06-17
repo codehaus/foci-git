@@ -128,6 +128,11 @@ EOF
     worker = MiddleMan.worker(:prefixing_worker)
     user_key = params[:user_key] # Key of the job that the user initiated.
     job_key = user_key.nil? ? '1' : worker.ask_result('current_job_key')
+
+    if job_key.nil?
+      return render :text => 'No job in progress, waiting for next update.'
+    end
+
     result = user_key.nil? ? 'status' : job_key + '_status'
     text = worker.ask_result(result)
 

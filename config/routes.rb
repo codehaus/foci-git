@@ -25,7 +25,7 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :core, :only => :index, :controller => 'core'
   map.resource :prefix, :only => :none, :controller => 'prefix',
-                        :member => { :simple => :get, :simple_data => :get,
+                        :member => { :simple_test => :get, :simple_data => :get,
                                      :ajax_update => [:get, :post],
                                      :progress => :get, :data => :get }
 
