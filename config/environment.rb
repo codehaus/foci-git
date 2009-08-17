@@ -10,6 +10,9 @@ RAILS_GEM_VERSION = '2.3.2' unless defined? RAILS_GEM_VERSION
 # Bootstrap the Rails environment, frameworks, and default configuration
 require File.join(File.dirname(__FILE__), 'boot')
 gem 'soap4r'
+gem 'addressable'
+gem 'SystemTimer'
+gem 'memcache-client'
 
 Rails::Initializer.run do |config|
   # Settings in config/environments/* take precedence over those specified here.
@@ -30,6 +33,14 @@ Rails::Initializer.run do |config|
   #                       :source => "http://code.whytheluckystiff.net"
   # config.gem "sqlite3-ruby", :lib => "sqlite3"
   # config.gem "aws-s3", :lib => "aws/s3"
+
+  config.gem "addressable"
+  config.gem "chronic"
+  config.gem "haml"
+  config.gem "memcache-client"
+  config.gem "packet"
+  config.gem "soap4r"
+  config.gem "SystemTimer"
 
   # Only load the plugins named here, in the order given. By default, all
   # plugins 
