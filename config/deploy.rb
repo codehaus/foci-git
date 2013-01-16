@@ -16,6 +16,7 @@
 
 set :application, "foci"
 
+
 role :app, "codehaus03.managed.contegix.com"
 role :web, "codehaus03.managed.contegix.com"
 role :db,  "codehaus03.managed.contegix.com", :primary => true
