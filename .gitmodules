@@ -22,6 +22,3 @@
 [submodule "vendor/plugins/open_flash_chart"]
 	path = vendor/plugins/open_flash_chart
 	url = git://github.com/pullmonkey/open_flash_chart.git
-[submodule "vendor/plugins/haml"]
-	path = vendor/plugins/haml
-	url = git://github.com/chriseppstein/haml.git
